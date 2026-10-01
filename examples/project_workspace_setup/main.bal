@@ -15,6 +15,10 @@ configurable string collaboratorLogin = "";
 configurable boolean inviteCollaborator = false;
 
 public function main() returns error? {
+    if inviteCollaborator && collaboratorLogin == "" {
+        return error("collaboratorLogin must be set when inviteCollaborator is true");
+    }
+
     box:Client boxClient = check new ({
         auth: {
             clientId,
@@ -41,9 +45,6 @@ public function main() returns error? {
 
     // Step 3: Invite a collaborator. This sends an invitation, so it only runs when enabled.
     if inviteCollaborator {
-        if collaboratorLogin == "" {
-            return error("collaboratorLogin must be set when inviteCollaborator is true");
-        }
         box:Collaboration collaboration = check boxClient->createCollaboration({
             item: {id: workspace.id, 'type: "folder"},
             accessibleBy: {login: collaboratorLogin, 'type: "user"},

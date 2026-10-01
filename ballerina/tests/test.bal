@@ -24,8 +24,8 @@ final string serviceUrl = isLiveServer ? "https://api.box.com/2.0" : "http://loc
 
 final Client box = check new ({auth: {token: accessToken}, httpVersion: http:HTTP_1_1}, serviceUrl);
 
-const string FILE_ID = "12345";
-const string FOLDER_ID = "22222";
+final string FILE_ID = isLiveServer ? os:getEnv("BOX_FILE_ID") : "12345";
+final string FOLDER_ID = isLiveServer ? os:getEnv("BOX_FOLDER_ID") : "22222";
 const string USER_ID = "33333";
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
@@ -35,7 +35,7 @@ function testGetFileInformation() returns error? {
     test:assertEquals(response?.'type, "file");
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["mock_tests"]}
 function testUpdateFile() returns error? {
     FileFull response = check box->updateFile(FILE_ID, {name: "Renamed Report.pdf"});
     test:assertEquals(response.id, FILE_ID);
@@ -189,6 +189,9 @@ function testCreateWebhook() returns error? {
 function testSearchForContent() returns error? {
     SearchResultsResponse response = check box->searchForContent(query = "report");
     test:assertTrue(response is SearchResults);
+    if !isLiveServer && response is SearchResults {
+        test:assertEquals((response.entries ?: []).length(), 1);
+    }
 }
 
 @test:Config {groups: ["mock_tests"]}

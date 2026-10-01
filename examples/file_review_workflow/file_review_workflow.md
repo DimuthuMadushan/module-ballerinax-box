@@ -23,7 +23,7 @@ reviewDueAt = "<due-date-time, e.g. 2026-10-15T10:00:00Z>"
 createReviewTask = false
 ```
 
-Creating a task notifies reviewers, so the example only creates it when `createReviewTask` is `true`.
+Creating a task notifies reviewers, so the example only creates it when `createReviewTask` is `true`. `reviewDueAt` is optional; leave it out to create the task without a due date.
 
 ## Run the example
 

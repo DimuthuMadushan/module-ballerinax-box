@@ -10,7 +10,7 @@ configurable string refreshToken = ?;
 configurable string refreshUrl = ?;
 configurable string fileId = ?;
 configurable string reviewMessage = ?;
-configurable string reviewDueAt = ?;
+configurable string reviewDueAt = "";
 configurable boolean createReviewTask = false;
 
 public function main() returns error? {
@@ -39,12 +39,15 @@ public function main() returns error? {
 
     // Step 3: Create a review task. Reviewers are notified, so it only runs when enabled.
     if createReviewTask {
-        box:Task task = check boxClient->createTask({
+        box:CreateTaskRequest taskRequest = {
             item: {id: file.id, 'type: "file"},
             action: "review",
-            message: reviewMessage,
-            dueAt: reviewDueAt
-        });
+            message: reviewMessage
+        };
+        if reviewDueAt != "" {
+            taskRequest.dueAt = reviewDueAt;
+        }
+        box:Task task = check boxClient->createTask(taskRequest);
         io:println("Created task ", task.id);
     }
 

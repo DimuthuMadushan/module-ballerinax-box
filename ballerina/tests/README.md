@@ -12,6 +12,8 @@ Tests run against a local mock of the Box Platform API (`tests/mock_service.bal`
 |---|---|
 | `IS_LIVE_SERVER` | Set to `true` to run against the live Box API. Defaults to the mock service. |
 | `BOX_ACCESS_TOKEN` | A Box access token or developer token. Read only when `IS_LIVE_SERVER` is `true`. |
+| `BOX_FILE_ID` | The ID of an existing file the token can read. Read only when `IS_LIVE_SERVER` is `true`. |
+| `BOX_FOLDER_ID` | The ID of an existing folder the token can read. Read only when `IS_LIVE_SERVER` is `true`. |
 
 The `live_tests` group contains only read-only calls. Tests that create or delete content run against the mock only.
 
@@ -28,6 +30,8 @@ Run the live tests:
 ```bash
 export IS_LIVE_SERVER=true
 export BOX_ACCESS_TOKEN=<access-token>
+export BOX_FILE_ID=<file-id>
+export BOX_FOLDER_ID=<folder-id>
 bal test --groups live_tests
 ```
 
