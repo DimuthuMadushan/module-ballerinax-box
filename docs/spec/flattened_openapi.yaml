@@ -1629,11 +1629,6 @@ paths:
         Performs a check to verify that a file will be accepted by Box
         before you upload the entire file.
       operationId: options_files_content
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FilesContentBody1"
       responses:
         "200":
           description: |-
@@ -2457,12 +2452,7 @@ paths:
             When a thumbnail can be created the thumbnail data will be
             returned in the body of the response.
           content:
-            image/jpg:
-              schema:
-                type: string
-                description: The thumbnail.
-                format: binary
-            image/png:
+            application/octet-stream:
               schema:
                 type: string
                 description: The thumbnail.
@@ -9160,10 +9150,10 @@ paths:
         explode: true
         schema:
           type: string
-          default: user_content
           enum:
           - user_content
           - enterprise_content
+          default: user_content
         example: user_content
       - name: file_extensions
         in: query
@@ -9400,11 +9390,11 @@ paths:
         explode: true
         schema:
           type: string
-          default: non_trashed_only
           enum:
           - non_trashed_only
           - trashed_only
           - all_items
+          default: non_trashed_only
         example: non_trashed_only
       - name: mdfilters
         in: query
@@ -9444,10 +9434,10 @@ paths:
         explode: true
         schema:
           type: string
-          default: relevance
           enum:
           - modified_at
           - relevance
+          default: relevance
         example: modified_at
       - name: direction
         in: query
@@ -9463,10 +9453,10 @@ paths:
         explode: true
         schema:
           type: string
-          default: DESC
           enum:
           - DESC
           - ASC
+          default: DESC
         example: ASC
       - name: limit
         in: query
@@ -12594,7 +12584,7 @@ paths:
             image data will be returned in the body of the
             response.
           content:
-            image/jpg:
+            application/octet-stream:
               schema:
                 type: string
                 description: The avatar.
@@ -14225,13 +14215,13 @@ paths:
         explode: true
         schema:
           type: string
-          default: all
           enum:
           - all
           - changes
           - sync
           - admin_logs
           - admin_logs_streaming
+          default: all
         example: all
       - name: stream_position
         in: query
@@ -21772,13 +21762,6 @@ components:
           type: string
           description: The unique ID of the metadata template field.
           example: 822227e0-47a5-921b-88a8-494760b2e6d2
-        options:
-          type: array
-          description: |-
-            A list of options for this field. This is used in combination
-            with the `enum` and `multiSelect` field types.
-          items:
-            $ref: "#/components/schemas/FieldsOptions"
     TrackingCode:
       title: Tracking code
       type: object
@@ -23782,24 +23765,6 @@ components:
             field will be result in an error.
           format: date-time
           example: 2019-08-29T23:59:00-07:00
-    MetadataOptionWrite1:
-      title: Metadata Option (Write)
-      required:
-      - key
-      type: object
-      properties:
-        key:
-          type: string
-          description: |-
-            The text value of the option. This represents both the display name of the
-            option and the internal key used when updating templates.
-          example: Category 1
-      description: |-
-        An option for a Metadata Template Field.
-
-        Options only need to be provided for fields of type `enum` and `multiSelect`.
-        Options represent the value(s) a user can select for the field either through
-        the UI or through the API.
     MetadataQueryResultItem:
       title: Metadata query search result item
       type: object
@@ -24601,11 +24566,11 @@ components:
           type: string
           description: The state of the archive being downloaded.
           example: succeeded
-          default: in_progress
           enum:
           - in_progress
           - failed
           - succeeded
+          default: in_progress
       description: The status of a `zip` archive being downloaded.
       x-box-reference-category: zip_downloads
       x-box-resource-id: zip_download_status
@@ -25568,10 +25533,10 @@ components:
             rejected
             * `complete` defines a general task which can be completed.
           example: review
-          default: review
           enum:
           - review
           - complete
+          default: review
         message:
           type: string
           description: An optional message to include with the task.
@@ -25595,10 +25560,10 @@ components:
             * `any_assignee` accepts any one assignee to review or
             approve the task in order for it to be considered completed.
           example: all_assignees
-          default: all_assignees
           enum:
           - all_assignees
           - any_assignee
+          default: all_assignees
     GlobalBoxSkillsCardsBody1:
       required:
       - cards
@@ -26622,11 +26587,11 @@ components:
             `final_copy_reader` only receives the final signed document and signing
             log.
           example: signer
-          default: signer
           enum:
           - signer
           - approver
           - final_copy_reader
+          default: signer
         is_in_person:
           type: boolean
           description: |-
@@ -35998,12 +35963,6 @@ components:
           description: "The content of the item, often the text representation."
           example: This is file content.
       description: The item to be processed by the LLM for ask requests.
-    OptionsMetadataOptionWrite12:
-      properties:
-        id:
-          type: string
-          description: The internal unique identifier of the option.
-          example: 45dc2849-a4a7-40a9-a751-4a699a589190
     AppItemAssociation:
       title: App item association
       required:
@@ -36220,11 +36179,11 @@ components:
             a `final_copy_reader` role only
             receives the final signed document and signing log.
           example: signer
-          default: signer
           enum:
           - signer
           - approver
           - final_copy_reader
+          default: signer
         is_in_person:
           type: boolean
           description: |-
@@ -36530,17 +36489,6 @@ components:
           description: The ID of the enterprise.
           example: "1232234"
       description: The enterprise to invite the user to.
-    FieldsOptions:
-      type: object
-      description: |-
-        An option for a Metadata Template Field.
-
-        Options are only present for fields of type `enum` and
-        `multiSelect`. Options represent the value(s) a user can
-        select for the field either through the UI or through the API.
-      allOf:
-      - $ref: "#/components/schemas/MetadataOptionWrite1"
-      - $ref: "#/components/schemas/OptionsMetadataOptionWrite12"
     Item:
       title: Item
       type: object
@@ -36563,14 +36511,6 @@ components:
             For marker-based paginated APIs, this field will be omitted.
           format: int64
           example: 5000
-        limit:
-          type: integer
-          description: |-
-            The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-          format: int64
-          example: 1000
         offset:
           type: integer
           description: |-
@@ -37192,28 +37132,6 @@ components:
       description: |-
         The part of an API response that describes marker
         based pagination.
-    FilesContentBody1:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the file.
-          example: File.mp4
-        size:
-          type: integer
-          description: The size of the file in bytes.
-          format: int32
-          example: 1024
-        parent:
-          allOf:
-          - type: object
-            properties:
-              id:
-                type: string
-                description: The ID of parent item.
-                example: "123"
-            description: The parent for this item.
-          - description: The parent folder to upload the file to.
     FilesUnderRetentionAllOf1:
       type: object
       properties:
@@ -39014,14 +38932,6 @@ components:
             For marker-based paginated APIs, this field will be omitted.
           format: int64
           example: 5000
-        limit:
-          type: integer
-          description: |-
-            The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-          format: int64
-          example: 1000
         offset:
           type: integer
           description: |-

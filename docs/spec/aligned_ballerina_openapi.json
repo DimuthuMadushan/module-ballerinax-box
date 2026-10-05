@@ -27271,21 +27271,6 @@
                     }
                 }
             },
-            "MetadataOptionWriteVariant1": {
-                "title": "Metadata Option (Write)",
-                "required": [
-                    "key"
-                ],
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "The text value of the option. This represents both the display name of the\noption and the internal key used when updating templates",
-                        "example": "Category 1"
-                    }
-                },
-                "description": "An option for a Metadata Template Field.\n\nOptions only need to be provided for fields of type `enum` and `multiSelect`.\nOptions represent the value(s) a user can select for the field either through\nthe UI or through the API"
-            },
             "MetadataQueryResultItem": {
                 "title": "Metadata query search result item",
                 "type": "object",
@@ -42259,15 +42244,6 @@
                 },
                 "description": "The item to be processed by the LLM for ask requests"
             },
-            "MetadataOptionWriteVariant12": {
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "The internal unique identifier of the option.",
-                        "example": "45dc2849-a4a7-40a9-a751-4a699a589190"
-                    }
-                }
-            },
             "UserFull": {
                 "title": "User (Full)",
                 "type": "object",
@@ -43025,18 +43001,6 @@
                 },
                 "description": "The enterprise to invite the user to"
             },
-            "MetadataTemplateFieldOption": {
-                "type": "object",
-                "description": "An option for a Metadata Template Field.\n\nOptions are only present for fields of type `enum` and\n`multiSelect`. Options represent the value(s) a user can\nselect for the field either through the UI or through the API",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/MetadataOptionWriteVariant1"
-                    },
-                    {
-                        "$ref": "#/components/schemas/MetadataOptionWriteVariant12"
-                    }
-                ]
-            },
             "Item": {
                 "title": "Item",
                 "type": "object",
@@ -43731,40 +43695,6 @@
                     }
                 },
                 "description": "The part of an API response that describes marker\nbased pagination"
-            },
-            "PreflightCheckBeforeUploadRequest": {
-                "type": "object",
-                "properties": {
-                    "parent": {
-                        "allOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "description": "The ID of parent item.",
-                                        "example": "123"
-                                    }
-                                },
-                                "description": "The parent for this item."
-                            },
-                            {
-                                "description": "The parent folder to upload the file to."
-                            }
-                        ]
-                    },
-                    "size": {
-                        "type": "integer",
-                        "description": "The size of the file in bytes",
-                        "format": "int32",
-                        "example": 1024
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "The name for the file",
-                        "example": "File.mp4"
-                    }
-                }
             },
             "FilesUnderRetentionPart1": {
                 "type": "object",

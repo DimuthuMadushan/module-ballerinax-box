@@ -1291,10 +1291,6 @@
     "FoldersfolderIdaddSharedLinkSharedLinkPermissions": "AddFolderSharedLinkPermissions",
     "GroupMembershipsGroupMembershipsAllOf12": "GroupMembershipsPart12",
     "StoragePoliciesStoragePoliciesAllOf12": "StoragePoliciesPart12",
-    "SearchResultWithSharedLink": "SearchResultWithSharedLink",
-    "FieldsOptions": "MetadataTemplateFieldOption",
-    "FilesContentBody1": "PreflightCheckBeforeUploadRequest",
-    "MetadataOptionWrite1": "MetadataOptionWriteVariant1",
-    "OptionsMetadataOptionWrite12": "MetadataOptionWriteVariant12"
+    "SearchResultWithSharedLink": "SearchResultWithSharedLink"
   }
 }

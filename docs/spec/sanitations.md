@@ -24,19 +24,19 @@ These changes are done in order to improve the overall usability, and as workaro
 3. Remove duplicated properties across `allOf` members
 
 - **Original**: `Users` and `Items` include two members that both declare `limit`, and `MetadataTemplateFields` includes two members that both declare `options`.
-- **Updated**: The duplicate declaration is removed from the later member in each schema, edited directly in the aligned spec `docs/spec/aligned_ballerina_openapi.json` (`UsersPart12.limit`, `ItemsPart12.limit` and `MetadataFieldReadVariant2.options`). The source `openapi.yaml` is unchanged.
+- **Updated**: The duplicate declaration is removed from the later member in each schema in the original `docs/spec/openapi.yaml` (the second `allOf` member's `limit` in `Users` and `Items`, and the second member's `options` in the inline metadata template field schema).
 - **Reason**: Ballerina rejects a record that includes two types declaring the same field (`redeclared symbol`).
 
 4. Narrow image responses to binary content
 
 - **Original**: `getFileThumbnail` declares `image/jpg` and `image/png`, and `getUserAvatar` declares `image/jpg`.
-- **Updated**: Both return `application/octet-stream` with `format: binary`, edited directly in the aligned spec `docs/spec/aligned_ballerina_openapi.json`.
+- **Updated**: Both return `application/octet-stream` with `format: binary`, applied in the original `docs/spec/openapi.yaml`.
 - **Reason**: Multiple image media types would otherwise generate an `http:Response` return; a single binary type returns `byte[]`.
 
 5. Drop the request body of `OPTIONS /files/content`
 
 - **Original**: `preflightCheckBeforeUpload` sends a JSON body with the file name, size and parent folder.
-- **Updated**: The request body is removed directly in the aligned spec `docs/spec/aligned_ballerina_openapi.json`, so the operation sends the preflight request without a body.
+- **Updated**: The request body is removed in the original `docs/spec/openapi.yaml`, so the operation sends the preflight request without a body.
 - **Reason**: `bal openapi` emits no HTTP call for an `OPTIONS` operation that has a request body, so the generated client does not compile.
 
 6. Keep the `#fragment` path keys (known limitation)

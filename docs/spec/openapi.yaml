@@ -1296,46 +1296,6 @@
         ],
         "x-box-tag": "uploads",
         "description": "Performs a check to verify that a file will be accepted by Box\nbefore you upload the entire file.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "description": "The name for the file.",
-                    "type": "string",
-                    "example": "File.mp4"
-                  },
-                  "size": {
-                    "description": "The size of the file in bytes.",
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 1024
-                  },
-                  "parent": {
-                    "allOf": [
-                      {
-                        "type": "object",
-                        "description": "The parent for this item.",
-                        "properties": {
-                          "id": {
-                            "description": "The ID of parent item.",
-                            "type": "string",
-                            "example": "123"
-                          }
-                        }
-                      },
-                      {
-                        "description": "The parent folder to upload the file to."
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "If the check passed, the response will include a session URL that\ncan be used to upload the file to.",
@@ -2475,14 +2435,7 @@
           "200": {
             "description": "When a thumbnail can be created the thumbnail data will be\nreturned in the body of the response.",
             "content": {
-              "image/jpg": {
-                "schema": {
-                  "description": "The thumbnail.",
-                  "type": "string",
-                  "format": "binary"
-                }
-              },
-              "image/png": {
+              "application/octet-stream": {
                 "schema": {
                   "description": "The thumbnail.",
                   "type": "string",
@@ -15235,7 +15188,7 @@
           "200": {
             "description": "When an avatar can be found for the user the\nimage data will be returned in the body of the\nresponse.",
             "content": {
-              "image/jpg": {
+              "application/octet-stream": {
                 "schema": {
                   "description": "The avatar.",
                   "type": "string",
@@ -34869,12 +34822,6 @@
                 "format": "int64",
                 "example": 5000
               },
-              "limit": {
-                "description": "The limit that was used for these entries. This will be the same as the\n`limit` query parameter unless that value exceeded the maximum value\nallowed. The maximum value varies by API.",
-                "type": "integer",
-                "format": "int64",
-                "example": 1000
-              },
               "offset": {
                 "description": "The 0-based offset of the first entry in this set. This will be the same\nas the `offset` query parameter.\n\nThis field is only returned for calls that use offset-based pagination.\nFor marker-based paginated APIs, this field will be omitted.",
                 "type": "integer",
@@ -36420,40 +36367,6 @@
                       "description": "The unique ID of the metadata template field.",
                       "type": "string",
                       "example": "822227e0-47a5-921b-88a8-494760b2e6d2"
-                    },
-                    "options": {
-                      "description": "A list of options for this field. This is used in combination\nwith the `enum` and `multiSelect` field types.",
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "description": "An option for a Metadata Template Field.\n\nOptions are only present for fields of type `enum` and\n`multiSelect`. Options represent the value(s) a user can\nselect for the field either through the UI or through the API.",
-                        "allOf": [
-                          {
-                            "title": "Metadata Option (Write)",
-                            "type": "object",
-                            "description": "An option for a Metadata Template Field.\n\nOptions only need to be provided for fields of type `enum` and `multiSelect`.\nOptions represent the value(s) a user can select for the field either through\nthe UI or through the API.",
-                            "required": [
-                              "key"
-                            ],
-                            "properties": {
-                              "key": {
-                                "description": "The text value of the option. This represents both the display name of the\noption and the internal key used when updating templates.",
-                                "type": "string",
-                                "example": "Category 1"
-                              }
-                            }
-                          },
-                          {
-                            "properties": {
-                              "id": {
-                                "description": "The internal unique identifier of the option.",
-                                "type": "string",
-                                "example": "45dc2849-a4a7-40a9-a751-4a699a589190"
-                              }
-                            }
-                          }
-                        ]
-                      }
                     }
                   }
                 }
@@ -43237,12 +43150,6 @@
                 "type": "integer",
                 "format": "int64",
                 "example": 5000
-              },
-              "limit": {
-                "description": "The limit that was used for these entries. This will be the same as the\n`limit` query parameter unless that value exceeded the maximum value\nallowed. The maximum value varies by API.",
-                "type": "integer",
-                "format": "int64",
-                "example": 1000
               },
               "offset": {
                 "description": "The 0-based offset of the first entry in this set. This will be the same\nas the `offset` query parameter.\n\nThis field is only returned for calls that use offset-based pagination.\nFor marker-based paginated APIs, this field will be omitted.",
